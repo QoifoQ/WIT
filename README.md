@@ -23,11 +23,11 @@ library(WITEstimator)
 
     n = 500
     gamma = c(rep(0.04,3),rep(0.5,2),0.2,rep(0.1,4))
-    p = length(PI)
+    p = length(gamma)
     alpha = matrix(c(rep(0,5),1,rep(0.7,4)),p,1)
     n =500
   
-    p=length(PI)
+    p=length(gamma)
     Sigma = 0.8*diag(1,p,p)
     
     for(i in 1:p){
@@ -43,11 +43,11 @@ library(WITEstimator)
     invalid_index = which(alpha !=0)
     QR_invalid = qr(Z[,invalid_index]);
     Z_valid_adj = qr.resid(QR_invalid,Z[,valid_index]);
-    txx = tcrossprod(t(PI[valid_index])%*%t(Z_valid_adj))/(n)
+    txx = tcrossprod(t(gamma[valid_index])%*%t(Z_valid_adj))/(n)
     
     Sigma_e = 1;
     Sigma_U = 1
-    mu = txx = tcrossprod(t(PI[valid_index])%*%t(Z_valid_adj))/Sigma_U
+    mu = txx = tcrossprod(t(gamma[valid_index])%*%t(Z_valid_adj))/Sigma_U
     
     Sigma_2 = matrix(c(Sigma_e,0.6*sqrt(Sigma_U*Sigma_e),0.6*sqrt(Sigma_U*Sigma_e),Sigma_U),2,2)
     error = mvrnorm(n,rep(0,2),Sigma_2)
@@ -64,7 +64,7 @@ Estimate simulated data with WIT estimator
 ```{r}
     
     
-D = Z%*%matrix(PI,p,1)+error[,2] # The remaining is the intercept
+D = Z%*%matrix(gamma,p,1)+error[,2] # The remaining is the intercept
 Y =  1*D+Z%*%alpha+error[,1]
 
 WIT_practice(D,Y,Z,seq(0.1,0.25,0.02),ini_lam = 0.05,num_trail = 4)
