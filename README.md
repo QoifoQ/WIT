@@ -1,6 +1,6 @@
 # WIT Estimator
 
-This is the github repo for the WIT estimator proposed by LIN et al. (2022) that tests overidentifying restrictions (or instrumental variable validity) with high-dimensional data, which is robust to heteroskedastic errors. The method is called the Q test since it is based on estimation and inference for quadratic functionals of high-dimensional vectors. The paper is available at .
+This is the github repo for the WIT estimator proposed by LIN et al. (2022) that estimate treatment effect using weak and some invalid IVs. paper is now avaible at: 
 
 ## Required packages 
 
@@ -10,13 +10,6 @@ You can install the required package with
 install.pacakges(c("ManyIV,ncvreg,ivmodel"))
 ```
 
-## Install in R
-
-You can install package WITEstimator by the following command in R.
-
-```R
-devtools::install_github("https://github.com/QoifoQ/WIT/WITEstimator")
-```
 
 ## Example
 
