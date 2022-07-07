@@ -26,75 +26,79 @@ This is a example 1 show in section 2.2 of our article.
 rm(list = ls())
 library(MASS)
 
-source("Lasso.R")
-source("Projection.R")
-source("QTest.R")
+library(WITEstimator)
 
-n = 300
-px = 150
-pz = 100 
+    n = 500
+    gamma = c(rep(0.04,3),rep(0.5,2),0.2,rep(0.1,4))
+    p = length(PI)
+    alpha = matrix(c(rep(0,5),1,rep(0.7,4)),p,1)
+    n =500
+  
+    p=length(PI)
+    Sigma = 0.8*diag(1,p,p)
+    
+    for(i in 1:p){
+      for (j in 1:p){
+        if(i !=j){
+          Sigma[i,j] = 0.3^(abs(i-j))*0.8
+        }
+      }
+    }
+    Z = mvrnorm(n , rep(0,p), Sigma)
+    
+    valid_index = which(alpha ==0)
+    invalid_index = which(alpha !=0)
+    QR_invalid = qr(Z[,invalid_index]);
+    Z_valid_adj = qr.resid(QR_invalid,Z[,valid_index]);
+    txx = tcrossprod(t(PI[valid_index])%*%t(Z_valid_adj))/(n)
+    
+    Sigma_e = 1;
+    Sigma_U = 1
+    mu = txx = tcrossprod(t(PI[valid_index])%*%t(Z_valid_adj))/Sigma_U
+    
+    Sigma_2 = matrix(c(Sigma_e,0.6*sqrt(Sigma_U*Sigma_e),0.6*sqrt(Sigma_U*Sigma_e),Sigma_U),2,2)
+    error = mvrnorm(n,rep(0,2),Sigma_2)
+    
+    med = rep(0,p)
+    med[(alpha ==0)] = rep(1,sum((alpha ==0)))
+    true_valid = med #true valid index
+    
 
-p = px + pz
-Sigma = diag(p)
-
-phi <- c(seq(0.1,0.5,0.1),rep(0,145))
-psi <- c(seq(0.3,0.7,0.1),rep(0,145))
-
-s1 = 10 # num of relevant IV
-gamma <- matrix(c(rep(0.5,10),rep(0,pz-10)),ncol = 1)
-
-beta = 1 
-
-set.seed(2022)
-
-## covariates and instruments 
-W <- MASS::mvrnorm(n=n, rep(1, p), Sigma)
-if (px == 0){
-  X <- NULL
-  Z <- W
-}else{
-  X <- W[,1:px]
-  Z <- W[,(px+1):p]
-}
-
-## error terms 
-err <- MASS::mvrnorm(n=n, rep(0, 2), matrix(1.5 * c(1, .5, .5,1),2))
-e <- err[,1]
-eps2 <- err[,2]
 ```
 
 
-Test results with valid instruments 
+Estimate simulated data with WIT estimator 
 ```{r}
-D <-  X%*%psi  + Z %*% gamma + eps2
-Y <-   D*beta + X%*%phi + e
+    
+    
+D = Z%*%matrix(PI,p,1)+error[,2] # The remaining is the intercept
+Y =  1*D+Z%*%alpha+error[,1]
 
-QTest(Y,D,Z,X) 
-# $invalid
-# [1] FALSE
-# 
-# $sig.level
-# [1] 0.05
-# 
-# $pval
-# [1] 0.6518306
+WIT_practice(D,Y,Z,seq(0.1,0.25,0.02),ini_lam = 0.05,num_trail = 4)
+#$WIT
+#[1] 0.9976033
+
+#$WIT_robust_std
+#[1] 0.06231824
+
+#$WIT_CI
+#[1] 0.8754595 1.1197470
+
+#$alpha_MCP
+# [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 1.0172806 0.6735095 0.7529272 0.6534325 0.6735992
+
+#$WIT_valid
+#[1] 1 2 3 4 5
+
+#$alpha_WIT
+# [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 1.0219745 0.6751280 0.7539500 0.6545832 0.6741253
+
+#$Sargen_p_value
+#[1] 0.3611227
+
+#$`Modified-CD`
+#[1] 0.3822153
 ```
 
-
-Test results with invalid instruments 
-```{r}
-pi <-  c(seq(0.1,1,0.1),rep(0,90))
-Y <- D*beta + X%*%phi + Z %*% pi + e
-
-QTest(Y,D,Z,X) 
-# $invalid
-# [1] TRUE
-# 
-# $sig.level
-# [1] 0.05
-# 
-# $pval
-# [1] 9.769963e-15
-```
 
 ## Reference 
