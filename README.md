@@ -1,6 +1,6 @@
 # WIT Estimator
 
-This is the github repo for the WIT estimator proposed by LIN et al. (2022) that estimate treatment effect using weak and some invalid IVs. The proposed WIT estimator is robust to many individually weak and some invalid IVs (high or low dimension). This paper is now avaible at: https://qoifoq.github.io/linyiqi.github.io/_pages/paper/WIT_main.pdf
+This is the GitHub repo for the WIT estimator proposed by LIN et al. (2022), which estimates treatment effect using weak and invalid IVs. The proposed WIT estimator is robust to many individually weak and some invalid IVs (high or low dimension). This paper is now avaible at: https://qoifoq.github.io/linyiqi.github.io/_pages/paper/WIT_main.pdf
 
 ## Required packages 
 
@@ -13,7 +13,7 @@ install.pacakges(c("ManyIV,ncvreg,ivmodel"))
 
 ## Example
 
-This is a example 1 show in section 2.2 of our article. 
+The following is example 1 considered in section 2.2 of our article. 
 
 ```{r example}
 rm(list = ls())
@@ -58,7 +58,7 @@ library(WITEstimator)
 ```
 
 
-Conduct Estimation on simulated data Using WIT estimator with MCD tuning.
+Conduct estimation on simulated data using WIT estimator with MCD tuning.
 ```{r}
 D = Z%*%matrix(gamma,p,1)+error[,2] # The remaining is the intercept
 Y =  1*D+Z%*%alpha+error[,1]
