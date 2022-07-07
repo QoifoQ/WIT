@@ -58,7 +58,7 @@ library(WITEstimator)
 ```
 
 
-Estimate simulated data with WIT estimator 
+Conduct Estimation on simulated data Using WIT estimator with MCD tuning.
 ```{r}
 D = Z%*%matrix(gamma,p,1)+error[,2] # The remaining is the intercept
 Y =  1*D+Z%*%alpha+error[,1]
