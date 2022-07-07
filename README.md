@@ -55,15 +55,11 @@ library(WITEstimator)
     med = rep(0,p)
     med[(alpha ==0)] = rep(1,sum((alpha ==0)))
     true_valid = med #true valid index
-    
-
 ```
 
 
 Estimate simulated data with WIT estimator 
 ```{r}
-    
-    
 D = Z%*%matrix(gamma,p,1)+error[,2] # The remaining is the intercept
 Y =  1*D+Z%*%alpha+error[,1]
 
