@@ -27,59 +27,67 @@ This repository contains the R scripts used for the numerical demonstrations pre
 The following is example 1 considered in Section 2.3 of our article. 
 
 ```{r example}
+# Clear the environment
 rm(list = ls())
+
+# Load necessary libraries
 library(MASS)
-
 library(WITEstimator)
-n = 500
-## TRUE Value 
-gamma = c(rep(0.04,3),rep(0.5,2),0.2,rep(0.1,4))
-p = length(gamma)
-alpha = matrix(c(rep(0,5),1,rep(0.7,4)),p,1)
 
-#####
-# IVs: Z1-Z5 are valid; Z6-Z10 are invalid.
-#####  
-p=length(gamma)
-Sigma = 0.8*diag(1,p,p)
-    
-for(i in 1:p)
-{
-    for (j in 1:p)
-    {
-      if(i !=j)
-      {
-        Sigma[i,j] = 0.3^(abs(i-j))*0.8
-      }
+# Set the number of observations
+n = 500
+
+# TRUE parameter values
+gamma = c(rep(0.04, 3), rep(0.5, 2), 0.2, rep(0.1, 4))
+p = length(gamma)
+alpha = matrix(c(rep(0, 5), 1, rep(0.7, 4)), p, 1)
+
+# Define the covariance matrix for the IVs
+Sigma = 0.8 * diag(1, p, p)
+for (i in 1:p) {
+  for (j in 1:p) {
+    if (i != j) {
+      Sigma[i, j] = 0.3^(abs(i - j)) * 0.8
     }
+  }
 }
-Z = mvrnorm(n , rep(0,p), Sigma)
-    
-valid_index = which(alpha ==0)
-invalid_index = which(alpha !=0)
-QR_invalid = qr(Z[,invalid_index]);
-Z_valid_adj = qr.resid(QR_invalid,Z[,valid_index]);
-txx = tcrossprod(t(gamma[valid_index])%*%t(Z_valid_adj))/(n)
-    
-Sigma_e = 1;
+
+# Generate instruments (Z) with multivariate normal distribution
+Z = mvrnorm(n, rep(0, p), Sigma)
+
+# Identify valid and invalid instruments
+valid_index = which(alpha == 0)
+invalid_index = which(alpha != 0)
+
+# Adjust the valid instruments for the presence of the invalid instruments
+QR_invalid = qr(Z[, invalid_index])
+Z_valid_adj = qr.resid(QR_invalid, Z[, valid_index])
+
+# Define additional parameters for the error term
+Sigma_e = 1
 Sigma_U = 1
-mu = txx = tcrossprod(t(gamma[valid_index])%*%t(Z_valid_adj))/Sigma_U
-    
-Sigma_2 = matrix(c(Sigma_e,0.6*sqrt(Sigma_U*Sigma_e),0.6*sqrt(Sigma_U*Sigma_e),Sigma_U),2,2)
-error = mvrnorm(n,rep(0,2),Sigma_2)
+
+# Calculate the mean vector 'mu' for the error term
+mu = tcrossprod(t(gamma[valid_index]) %*% t(Z_valid_adj)) / Sigma_U
+
+# Define the covariance matrix for the error term
+Sigma_2 = matrix(c(Sigma_e, 0.6 * sqrt(Sigma_U * Sigma_e), 0.6 * sqrt(Sigma_U * Sigma_e), Sigma_U), 2, 2)
+
+# Generate the error term with multivariate normal distribution
+error = mvrnorm(n, rep(0, 2), Sigma_2)
 ```
 
 
 Conduct estimation on simulated data using WIT estimator with MCD tuning.
 ```{r}
-## Simulated data
+# Generate simulated data
 D = Z%*%matrix(gamma,p,1)+error[,2] # The remaining is the intercept
 Y =  1*D+Z%*%alpha+error[,1]
 
-## Estimate 
+# Estimate 
 WIT_practice(D,Y,Z,seq(0.1,0.25,0.02),ini_lam = 0.05,num_trail = 4)
 
-## Results
+# Show estimated results
 #$WIT
 #[1] 0.9976033
 
