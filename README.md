@@ -1,6 +1,10 @@
 # WIT Estimator
 
-This is the GitHub repo for the WIT estimator proposed by LIN et al. (2022), which estimates treatment effects using weak and invalid IVs. The proposed WIT estimator is robust to many individually weak and some invalid IVs (high or low dimension). This paper is now available at: https://arxiv.org/abs/2207.03035
+## Overview
+
+This repository hosts the implementation of the Weak and some Invalid instruments robust Treatment (WIT) estimator, as proposed by Lin et al. (2022). The estimator is designed to address the challenges of estimating treatment effects in the presence of many weak and potentially some invalid instrumental variables (IVs). 
+
+The paper detailing the theory and methodology behind the WIT estimator is publicly available and can be accessed at [https://arxiv.org/abs/2207.03035](https://arxiv.org/abs/2207.03035).
 
 ## Required packages 
 
@@ -10,10 +14,17 @@ You can install the required package with
 install.pacakges(c("ManyIV,ncvreg,ivmodel"))
 ```
 
+## Repository Contents
+This repository contains the R scripts used for the numerical demonstrations presented in our paper. Each script is associated with a specific section of the paper, allowing for replication of the results as described below:
+
+- `Numerical Demonstrations/`
+  - `Example1.R`: Generates the results for Example 1 presented in Section 2.3 of the paper.
+  - `Simulation.R`: Replicates the Case 1 simulation results from Section 4. To reproduce other simulation scenarios discussed in the paper, you can modify the coefficients as needed within the script.
+  - `Application.R`: Provides a toy example that mimics the real data analysis detailed in Section 5. This script also computes the WIT (Whatever It Stands For) estimate for the toy dataset.
 
 ## Example
 
-The following is example 1 considered in section 2.2 of our article. 
+The following is example 1 considered in Section 2.3 of our article. 
 
 ```{r example}
 rm(list = ls())
