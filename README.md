@@ -19,7 +19,7 @@ install.pacakges(c("ManyIV,ncvreg,ivmodel"))
 ``` r
 install.packages("devtools")
 library(devtools)
-source_url("https://raw.githubusercontent.com/QoifoQ/WIT/main/WIT_Estimator_V1.r")
+source("https://raw.githubusercontent.com/QoifoQ/WIT/master/WIT_Estimator_V1.R")
 ```
 
 ## Repository Contents
