@@ -14,6 +14,14 @@ You can install the required package with
 install.pacakges(c("ManyIV,ncvreg,ivmodel"))
 ```
 
+## Installation 
+
+‘’‘ r
+install.packages("devtools")
+library(devtools)
+source_url("https://raw.githubusercontent.com/QoifoQ/WIT/main/WIT_Estimator_V1.r")
+'''
+
 ## Repository Contents
 This repository contains the R scripts used for the numerical demonstrations presented in our paper. Each script is associated with a specific section of the paper, allowing for replication of the results as described below:
 
