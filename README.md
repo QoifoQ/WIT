@@ -1,6 +1,6 @@
 # WIT Estimator
 
-This is the GitHub repo for the WIT estimator proposed by LIN et al. (2022), which estimates treatment effect using weak and invalid IVs. The proposed WIT estimator is robust to many individually weak and some invalid IVs (high or low dimension). This paper is now avaible at: https://arxiv.org/abs/2207.03035
+This is the GitHub repo for the WIT estimator proposed by LIN et al. (2022), which estimates treatment effects using weak and invalid IVs. The proposed WIT estimator is robust to many individually weak and some invalid IVs (high or low dimension). This paper is now available at: https://arxiv.org/abs/2207.03035
 
 ## Required packages 
 
@@ -96,3 +96,4 @@ WIT_practice(D,Y,Z,seq(0.1,0.25,0.02),ini_lam = 0.05,num_trail = 4)
 
 
 ## Reference 
+Lin, Y., Windmeijer, F., Song, X., & Fan, Q. (2022). On the instrumental variable estimation with many weak and invalid instruments. arXiv preprint arXiv:2207.03035.
