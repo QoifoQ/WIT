@@ -26,7 +26,6 @@ source("https://raw.githubusercontent.com/QoifoQ/WIT/master/WIT_Estimator_V1.R")
 This repository contains the R scripts used for the numerical demonstrations presented in our paper. Each script is associated with a specific section of the paper, allowing for replication of the results as described below:
 
 - `Numerical Demonstrations/`
-  - `Example1.R`: Generates the results for Example 1 presented in Section 2.3 of the paper.
   - `Simulation.R`: Replicates the Case 1 simulation results from Section 4. To reproduce other simulation scenarios discussed in the paper, you can modify the coefficients as needed within the script.
   - `Application.R`: Provides a toy example that mimics the real data analysis detailed in Section 5. This script also computes the WIT estimate for the toy dataset.
 
