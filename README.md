@@ -22,7 +22,7 @@ This repository contains the R scripts used for the numerical demonstrations pre
   - `Simulation.R`: Replicates the Case 1 simulation results from Section 4. To reproduce other simulation scenarios discussed in the paper, you can modify the coefficients as needed within the script.
   - `Application.R`: Provides a toy example that mimics the real data analysis detailed in Section 5. This script also computes the WIT estimate for the toy dataset.
 
-## Example
+## Example of Usage
 
 The following is example 1 considered in Section 2.3 of our article. 
 
