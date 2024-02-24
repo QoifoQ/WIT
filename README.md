@@ -55,20 +55,10 @@ for (i in 1:p) {
 # Generate instruments (Z) with multivariate normal distribution
 Z = mvrnorm(n, rep(0, p), Sigma)
 
-# Identify valid and invalid instruments
-valid_index = which(alpha == 0)
-invalid_index = which(alpha != 0)
-
-# Adjust the valid instruments for the presence of the invalid instruments
-QR_invalid = qr(Z[, invalid_index])
-Z_valid_adj = qr.resid(QR_invalid, Z[, valid_index])
-
 # Define additional parameters for the error term
 Sigma_e = 1
 Sigma_U = 1
 
-# Calculate the mean vector 'mu' for the error term
-mu = tcrossprod(t(gamma[valid_index]) %*% t(Z_valid_adj)) / Sigma_U
 
 # Define the covariance matrix for the error term
 Sigma_2 = matrix(c(Sigma_e, 0.6 * sqrt(Sigma_U * Sigma_e), 0.6 * sqrt(Sigma_U * Sigma_e), Sigma_U), 2, 2)
@@ -81,36 +71,38 @@ error = mvrnorm(n, rep(0, 2), Sigma_2)
 Conduct estimation on simulated data using WIT estimator with MCD tuning.
 ```{r}
 # Generate simulated data
-D = Z%*%matrix(gamma,p,1)+error[,2] # The remaining is the intercept
+D = Z%*%matrix(gamma,p,1)+error[,2] 
 Y =  1*D+Z%*%alpha+error[,1]
 
 # Estimate 
-WIT_practice(D,Y,Z,seq(0.1,0.25,0.02),ini_lam = 0.05,num_trail = 4)
+WIT_Results = WIT_practice(D,Y,Z,seq(0.1,0.25,0.02),ini_lam = 0.05,num_trail = 4)
 
 # Show estimated results
-#$WIT
-#[1] 0.9976033
+WIT_Results$Final
 
-#$WIT_robust_std
-#[1] 0.06231824
+$WIT
+[1] 0.9900749
 
-#$WIT_CI
-#[1] 0.8754595 1.1197470
+$WIT_robust_std
+[1] 0.06454843
 
-#$alpha_MCP
-# [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 1.0172806 0.6735095 0.7529272 0.6534325 0.6735992
+$WIT_CI
+[1] 0.86356 1.11659
 
-#$WIT_valid
-#[1] 1 2 3 4 5
+$alpha_MCP
+ [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.9877521 0.6450006 0.7149057 0.7898840 0.6759620
 
-#$alpha_WIT
-# [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 1.0219745 0.6751280 0.7539500 0.6545832 0.6741253
+$WIT_valid
+[1] 1 2 3 4 5
 
-#$Sargen_p_value
-#[1] 0.3611227
+$alpha_WIT
+ [1] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.9889044 0.6450930 0.7156186 0.7902349 0.6762512
 
-#$`Modified-CD`
-#[1] 0.3822153
+$Sargen_p_value
+[1] 0.3421309
+
+$`Modified-CD`
+[1] 0.3650936
 ```
 
 
