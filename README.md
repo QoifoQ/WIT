@@ -40,7 +40,7 @@ rm(list = ls())
 
 # Load necessary libraries
 library(MASS)
-library(WITEstimator)
+source("https://raw.githubusercontent.com/QoifoQ/WIT/master/WIT_Estimator_V1.R")
 
 # Set the number of observations
 n = 500
