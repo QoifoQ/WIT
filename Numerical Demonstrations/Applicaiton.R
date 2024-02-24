@@ -37,8 +37,8 @@ for (i in 1:p) {
 Z = mvrnorm(n, rep(0, p), Sigma)
 
 # Define additional parameters for the error term
-Sigma_e = 0.01
-Sigma_U = 0.01
+Sigma_e = 0.05
+Sigma_U = 0.05
 
 
 # Define the covariance matrix for the error term
@@ -50,10 +50,10 @@ error = mvrnorm(n, rep(0, 2), Sigma_2)
 
 # Generate simulated data
 D = Z%*%matrix(gamma,p,1)+error[,2] 
-Y =  1*D+Z%*%alpha+error[,1]
+Y =  0.123*D+Z%*%alpha+error[,1]
 
 # Estimate 
-WIT_Results = WIT_practice(D,Y,Z,exp(seq(-10,-4,0.1)),ini_lam = 0.05,num_trail = 2)
+WIT_Results = WIT_practice(D,Y,Z,exp(seq(-9,-4,0.5)),ini_lam = 0.05,num_trail = 2)
 
 # Show estimated results
 WIT_Results$Final
