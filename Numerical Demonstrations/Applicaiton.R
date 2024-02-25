@@ -1,7 +1,7 @@
 # Clear the environment
 rm(list = ls())
 
-set.seed(0)
+set.seed(111)
 # Load Estimator
 source("https://raw.githubusercontent.com/QoifoQ/WIT/master/WIT_Estimator_V1.R")
 
@@ -13,7 +13,7 @@ library(MASS)
 n = 105239
 
 # TRUE parameter values
-gamma = c(rep(0.0001, 96))
+gamma = c(rep(0.0003, 96))
 p = length(gamma)
 alpha = matrix(c( 0,  0 , 0,  2.578878e-06  ,0 , 0 , 0 , 0,  0,  0,  0,  0,
                   9.121386e-05, -1.591784e-04,  0 , 0,  0 , 0 , 0 , 0,  0, -3.296838e-04 , 0 , 0,
