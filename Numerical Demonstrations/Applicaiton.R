@@ -1,6 +1,7 @@
 # Clear the environment
 rm(list = ls())
 
+set.seed(0)
 # Load Estimator
 source("https://raw.githubusercontent.com/QoifoQ/WIT/master/WIT_Estimator_V1.R")
 
@@ -12,7 +13,7 @@ library(MASS)
 n = 105239
 
 # TRUE parameter values
-gamma = c(rep(0.001, 96))
+gamma = c(rep(0.0001, 96))
 p = length(gamma)
 alpha = matrix(c( 0,  0 , 0,  2.578878e-06  ,0 , 0 , 0 , 0,  0,  0,  0,  0,
                   9.121386e-05, -1.591784e-04,  0 , 0,  0 , 0 , 0 , 0,  0, -3.296838e-04 , 0 , 0,
@@ -37,8 +38,8 @@ for (i in 1:p) {
 Z = mvrnorm(n, rep(0, p), Sigma)
 
 # Define additional parameters for the error term
-Sigma_e = 0.05
-Sigma_U = 0.05
+Sigma_e = 0.0001
+Sigma_U = 0.0001
 
 
 # Define the covariance matrix for the error term
@@ -53,7 +54,7 @@ D = Z%*%matrix(gamma,p,1)+error[,2]
 Y =  0.123*D+Z%*%alpha+error[,1]
 
 # Estimate 
-WIT_Results = WIT_practice(D,Y,Z,exp(seq(-9,-4,0.5)),ini_lam = 0.05,num_trail = 2)
+WIT_Results = WIT_practice(D,Y,Z,exp(seq(-10,-4,0.5)),ini_lam = 0.05,num_trail = 2)
 
 # Show estimated results
 WIT_Results$Final
