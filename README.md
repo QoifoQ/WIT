@@ -2,9 +2,9 @@
 
 ## Overview
 
-This repository hosts the implementation of the Weak and some Invalid instruments robust Treatment (WIT) estimator, as proposed by Lin et al. (2022). The estimator is designed to address the challenges of estimating treatment effects in the presence of many weak and potentially some invalid instrumental variables (IVs). 
+This repository hosts the implementation of the Weak and some Invalid instruments robust Treatment (WIT) estimator, as proposed by Lin et al. (2024). The estimator is designed to address the challenges of estimating treatment effects in the presence of many weak and potentially some invalid instrumental variables (IVs). 
 
-The paper detailing the theory and methodology behind the WIT estimator is publicly available and can be accessed at [https://arxiv.org/abs/2207.03035](https://arxiv.org/abs/2207.03035).
+The paper detailing the theory and methodology behind the WIT estimator is publicly available and can be accessed at [https://academic.oup.com/jrsssb/advance-article-abstract/doi/10.1093/jrsssb/qkae025/7629972](https://academic.oup.com/jrsssb/advance-article-abstract/doi/10.1093/jrsssb/qkae025/7629972).
 
 ## Required packages 
 
@@ -114,4 +114,4 @@ $`Modified-CD`
 
 
 ## Reference 
-Lin, Y., Windmeijer, F., Song, X., & Fan, Q. (2022). On the instrumental variable estimation with many weak and invalid instruments. arXiv preprint arXiv:2207.03035.
+Lin, Y., Windmeijer, F., Song, X., & Fan, Q. (2024). On the instrumental variable estimation with many weak and invalid instruments. Journal of the Royal Statistical Society Series B: Statistical Methodology, qkae025.
